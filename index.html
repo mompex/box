@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where To Watch Popular Movies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        .search-container {
+            margin: 1rem auto;
+            text-align: center;
+        }
+        .search-container input {
+            padding: 0.5rem;
+            font-size: 1rem;
+            width: 300px;
+        }
+        .search-container button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .search-container button:hover {
+            background-color: #555;
+        }
+        .search-container select {
+            padding: 0.5rem;
+            font-size: 1rem;
+            margin-left: 1rem;
+        }
+        .container {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .movie {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            cursor: pointer;
+        }
+        .movie img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .movie h3 {
+            font-size: 1.2rem;
+            margin: 0.5rem;
+        }
+        .movie p {
+            color: #555;
+            margin: 0.5rem;
+        }
+        .movie .release-date {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        .ad-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            z-index: 1000;
+        }
+        #modal-content {
+            background: #222;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 900px;
+            width: 90%;
+            position: relative;
+        }
+        #modal img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        #modal h2 {
+            margin: 1rem 0;
+        }
+        #modal p {
+            margin: 0.5rem 0;
+        }
+        #modal .genres {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 1rem;
+        }
+        #modal button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #e50914;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        #modal button:hover {
+            background-color: #f30c1d;
+        }
+        .ad-section {
+            margin-top: 1rem;
+            text-align: center;
+            background-color: #444;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .ad-section p {
+            color: #ccc;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Movies Explorer</h1>
+    </header>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search for a movie...">
+        <button onclick="searchMovies()">Search</button>
+        <select id="language-select" onchange="changeLanguage()">
+            <option value="en-US" selected>English</option>
+			<option value="ar-EG">Arabic</option>
+			<option value="bg-BG">Bulgarian</option>
+            <option value="zh-CN">Chinese</option>
+			<option value="zh-SG">Chinese</option>
+			<option value="zh-HK">Hongkong</option>
+			<option value="zh-TW">Taiwan</option>
+			<option value="fr-CA">French CA</option>
+			<option value="fr-FR">French</option>
+			<option value="de-DE">German</option>
+			<option value="hi-IN">Hindi</option>
+			<option value="hu-HU">Hungarian</option>
+			<option value="id-ID">Bahasa Indonesia</option>
+			<option value="it-IT">Italian</option>
+			<option value="ja-JP">Japanese</option>
+			<option value="kn-IN">Kannada</option>
+			<option value="ko-KR">Korean</option>
+			<option value="pt-BR">Portuguese</option>
+			<option value="pt-PT">Portuguese</option>
+			<option value="sk-SK">Slovak</option>
+			<option value="es-AR">Spanish; Castilian</option>
+			<option value="es-ES">Spanish; Castilian</option>
+			<option value="es-MX">Spanish; Castilian</option>
+			<option value="th-TH">Thai</option>
+			<option value="vi-VN">Vietnamese</option>
+            <!-- Tambahkan bahasa lainnya sesuai kebutuhan -->
+        </select>
+    </div>
+    <div class="ad-container">
+<script type="text/javascript">
+	atOptions = {
+		'key' : '26ab5f7e2864a41f249fc7e5a2522d5d',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//fryboldlymalice.com/26ab5f7e2864a41f249fc7e5a2522d5d/invoke.js"></script>
+
+<script type='text/javascript' src='//fryboldlymalice.com/04/a8/e7/04a8e72e519ef1af64c4bed16f6c43ed.js'></script>
+    </div>
+    <div class="container" id="movies-container">
+        <!-- Movies will be displayed here -->
+    </div>
+
+    <div id="modal">
+        <div id="modal-content">
+            <button onclick="closeModal()">Close</button>
+            <img id="modal-img" src="" alt="Movie Poster">
+            <h2 id="modal-title"></h2>
+            <p class="genres" id="modal-genres"></p>
+            <p id="modal-overview"></p>
+            <p id="modal-release-date"></p>
+            <iframe id="modal-trailer" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+            <div class="ad-section">
+<script type="text/javascript">
+	atOptions = {
+		'key' : '26ab5f7e2864a41f249fc7e5a2522d5d',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//fryboldlymalice.com/26ab5f7e2864a41f249fc7e5a2522d5d/invoke.js"></script>
+            </div>
+            <button onclick="goBackToMovies()">Back to Movies</button>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = '3f45488e50ce5ef5a25ed21f1fcd98f3'; // Ganti dengan API key TMDB Anda
+        const BASE_URL = 'https://api.themoviedb.org/3';
+        const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+        let currentLanguage = 'en-US'; // Bahasa default
+
+        async function fetchMovies(url) {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                displayMovies(data.results);
+            } catch (error) {
+                console.error('Error fetching movies:', error);
+            }
+        }
+
+        async function fetchMovieDetails(movieId) {
+            try {
+                const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=${currentLanguage}&append_to_response=videos`);
+                const movie = await response.json();
+                openModal(movie);
+            } catch (error) {
+                console.error('Error fetching movie details:', error);
+            }
+        }
+
+        function displayMovies(movies) {
+            const moviesContainer = document.getElementById('movies-container');
+            moviesContainer.innerHTML = movies.map(movie => `
+                <div class="movie" onclick="fetchMovieDetails(${movie.id})">
+                    <img src="${IMG_URL + movie.backdrop_path}" alt="${movie.title}">
+                    <h3>${movie.title} (${new Date(movie.release_date).getFullYear()})</h3>
+                    <p class="release-date">Release Date: ${movie.release_date}</p>
+                    <p>Rating: ${movie.vote_average}</p>
+                </div>
+            `).join('');
+        }
+
+        function openModal(movie) {
+            document.getElementById('modal-img').src = IMG_URL + movie.backdrop_path;
+            document.getElementById('modal-title').textContent = movie.title;
+            document.getElementById('modal-overview').textContent = movie.overview || 'No synopsis available.';
+            document.getElementById('modal-release-date').textContent = `Release Date: ${movie.release_date}`;
+
+            const genres = movie.genres.map(genre => genre.name).join(', ');
+            document.getElementById('modal-genres').textContent = `Genres: ${genres}`;
+
+            const trailer = movie.videos.results.find(video => video.type === 'Trailer');
+            document.getElementById('modal-trailer').src = trailer ? `https://www.youtube.com/embed/${trailer.key}` : '';
+            document.getElementById('modal-trailer').style.display = trailer ? 'block' : 'none';
+
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('modal-trailer').src = '';
+        }
+
+        function goBackToMovies() {
+            closeModal();
+        }
+
+        function searchMovies() {
+            const query = document.getElementById('search-input').value;
+            if (query.trim()) {
+                const searchURL = `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=${currentLanguage}`;
+                fetchMovies(searchURL);
+            }
+        }
+
+        function changeLanguage() {
+            const selectedLanguage = document.getElementById('language-select').value;
+            currentLanguage = selectedLanguage;
+            fetchMovies(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=${currentLanguage}&page=1`);
+        }
+
+        // Fetch popular movies on page load
+        fetchMovies(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=${currentLanguage}&page=1`);
+    </script>
+</body>
+</html>
